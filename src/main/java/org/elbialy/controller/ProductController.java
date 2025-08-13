@@ -24,10 +24,19 @@ public class ProductController {
                 .entity(productService.getAll(page,size))
                 .build();
     }
+
     @POST
+    @Path("/add")
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addProduct(Product product){
         return Response.status(Response.Status.CREATED).entity(productService.add(product)).build();
+    }
+
+    @GET
+    @Path("/{product-id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProduct(@PathParam("product-id")long id){
+        return Response.ok().entity(productService.getById(id)).build();
     }
 }

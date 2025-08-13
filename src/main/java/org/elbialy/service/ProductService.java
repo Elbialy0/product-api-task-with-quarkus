@@ -4,6 +4,7 @@ import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.elbialy.dto.ProductDto;
 import org.elbialy.model.Product;
 import org.elbialy.repository.ProductRepository;
 
@@ -23,5 +24,10 @@ public class ProductService {
     public String  add(Product product) {
         productRepository.persist(product);
         return "Product saved successfully";
+    }
+
+    public ProductDto getById(long id) {
+        Product product = productRepository.findById(id);
+        return new ProductDto(product.getName(),product.getCategory(),product.getQuantity());
     }
 }
