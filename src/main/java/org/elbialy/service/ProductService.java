@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.elbialy.dto.ProductDto;
 import org.elbialy.model.Product;
 import org.elbialy.repository.ProductRepository;
-
-import java.awt.print.Pageable;
 import java.util.List;
 
 @ApplicationScoped
@@ -29,5 +27,14 @@ public class ProductService {
     public ProductDto getById(long id) {
         Product product = productRepository.findById(id);
         return new ProductDto(product.getName(),product.getCategory(),product.getQuantity());
+    }
+
+    public ProductDto update(long id, ProductDto productDto) {
+        Product product = productRepository.findById(id);
+        product.setName(productDto.name());
+        product.setCategory(productDto.category());
+        product.setQuantity(productDto.quantity());
+        product.persist();
+        return productDto;
     }
 }

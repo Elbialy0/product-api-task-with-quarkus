@@ -1,16 +1,14 @@
 package org.elbialy.controller;
 
-import io.quarkus.security.User;
 import jakarta.ws.rs.*;
-import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.elbialy.dto.ProductDto;
 import org.elbialy.model.Product;
 import org.elbialy.service.ProductService;
 
-import javax.xml.namespace.QName;
+
 
 @Path("/products")
 @RequiredArgsConstructor
@@ -38,5 +36,13 @@ public class ProductController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProduct(@PathParam("product-id")long id){
         return Response.ok().entity(productService.getById(id)).build();
+    }
+    @PUT
+    @Path("/update-product/{product-id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateProduct(@PathParam("product-id")long id,
+                                  ProductDto productDto){
+       return Response.ok().entity(productService.update(id,productDto)).build();
     }
 }
