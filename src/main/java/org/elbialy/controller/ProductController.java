@@ -55,11 +55,21 @@ public class ProductController {
             ,ProductDto partialProduct){
         return Response.ok().entity(productService.updateWithPatch(id,partialProduct)).build();
     }
+
     @DELETE
     @Path("/delete/{product-id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public Response deleteProduct(@PathParam("product-id")long id){
         return Response.ok().entity(productService.delete(id)).build();
+    }
+
+    @GET
+    @Path("/category")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getProductByCategory(@QueryParam("filter")String filter,
+                                         @DefaultValue("0")@QueryParam("page")int page,
+                                         @DefaultValue("10")@QueryParam("size")int size){
+        return Response.ok().entity(productService.getByCategory(filter,page,size)).build();
     }
 }

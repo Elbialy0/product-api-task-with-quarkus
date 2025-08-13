@@ -62,4 +62,11 @@ public class ProductService {
         return "Product returned successfully!";
 
     }
+
+    public List<ProductDto> getByCategory(String filter, int page, int size) {
+        PanacheQuery<Product> productPanacheQuery = productRepository.findByCategory(filter).page(page,size);
+        return productPanacheQuery.stream().map(product -> new ProductDto(
+                product.getName(), product.getCategory(), product.getQuantity()
+        )).toList();
+    }
 }
