@@ -29,6 +29,7 @@ public class ProductService {
         return new ProductDto(product.getName(),product.getCategory(),product.getQuantity());
     }
 
+    @Transactional
     public ProductDto update(long id, ProductDto productDto) {
         Product product = productRepository.findById(id);
         product.setName(productDto.name());
@@ -36,5 +37,29 @@ public class ProductService {
         product.setQuantity(productDto.quantity());
         product.persist();
         return productDto;
+    }
+
+    @Transactional
+    public ProductDto updateWithPatch(long id, ProductDto partialProduct) {
+        Product product = productRepository.findById(id);
+        if(partialProduct.quantity()!=null){
+            product.setQuantity(partialProduct.quantity());
+        }
+        if(partialProduct.name()!=null){
+            product.setName(partialProduct.name());
+        }
+        if(partialProduct.category()!=null){
+            product.setCategory(partialProduct.category());
+        }
+        product.persist();
+        return new ProductDto(product.getName(),product.getCategory(),product.getQuantity());
+    }
+
+    @Transactional
+    public String  delete(long id) {
+        Product product = productRepository.findById(id);
+        product.delete();
+        return "Product returned successfully!";
+
     }
 }

@@ -37,6 +37,7 @@ public class ProductController {
     public Response getProduct(@PathParam("product-id")long id){
         return Response.ok().entity(productService.getById(id)).build();
     }
+
     @PUT
     @Path("/update-product/{product-id}")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -44,5 +45,21 @@ public class ProductController {
     public Response updateProduct(@PathParam("product-id")long id,
                                   ProductDto productDto){
        return Response.ok().entity(productService.update(id,productDto)).build();
+    }
+
+    @PATCH
+    @Path("/update-product/{product-id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateProductWithPatch(@PathParam("product-id")long id
+            ,ProductDto partialProduct){
+        return Response.ok().entity(productService.updateWithPatch(id,partialProduct)).build();
+    }
+    @DELETE
+    @Path("/delete/{product-id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteProduct(@PathParam("product-id")long id){
+        return Response.ok().entity(productService.delete(id)).build();
     }
 }
